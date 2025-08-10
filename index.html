@@ -1,0 +1,2960 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creative Clock Collection</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a, #1a1a2e, #16213e, #0f3460);
+            background-size: 400% 400%;
+            animation: gradientBackground 15s ease infinite;
+            min-height: 100vh;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientBackground {
+
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+
+            25% {
+                background-position: 100% 50%;
+            }
+
+            50% {
+                background-position: 100% 100%;
+            }
+
+            75% {
+                background-position: 0% 100%;
+            }
+        }
+
+        .header {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% {
+                left: -100%;
+            }
+
+            100% {
+                left: 100%;
+            }
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57, #ff9ff3);
+            background-size: 600% 600%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientText 4s ease-in-out infinite;
+            margin-bottom: 0.5rem;
+        }
+
+        @keyframes gradientText {
+
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 300;
+        }
+
+        .clocks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2.5rem;
+            padding: 3rem 2rem;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .clock-container {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 24px;
+            padding: 2.5rem;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .clock-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(255, 107, 107, 0.1), rgba(78, 205, 196, 0.1));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .clock-container:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .clock-container:hover::before {
+            opacity: 1;
+        }
+
+        .clock-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            color: #e0e0e0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .clock-description {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+
+        .time-display {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 1.3rem;
+            font-weight: 500;
+            color: #e0e0e0;
+            font-family: 'JetBrains Mono', monospace;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            display: inline-block;
+            min-width: 120px;
+        }
+
+        /* Rotating Face Clock Styles */
+        .rotating-clock {
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            position: relative;
+            background: radial-gradient(circle, #2c2c2c, #1a1a1a);
+            border: 6px solid #444;
+            box-shadow:
+                0 0 30px rgba(0, 0, 0, 0.6),
+                inset 0 0 20px rgba(0, 0, 0, 0.4),
+                0 0 0 2px rgba(255, 255, 255, 0.1);
+            margin: 0 auto;
+        }
+
+        .rotating-clock-face {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: transform 0.3s cubic-bezier(0.4, 1.8, 0.5, 1);
+        }
+
+        .rotating-number {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #e0e0e0;
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+        }
+
+        /* Position each number around the clock face */
+        .rotating-number-1 {
+            transform: rotate(30deg);
+        }
+
+        .rotating-number-2 {
+            transform: rotate(60deg);
+        }
+
+        .rotating-number-3 {
+            transform: rotate(90deg);
+        }
+
+        .rotating-number-4 {
+            transform: rotate(120deg);
+        }
+
+        .rotating-number-5 {
+            transform: rotate(150deg);
+        }
+
+        .rotating-number-6 {
+            transform: rotate(180deg);
+        }
+
+        .rotating-number-7 {
+            transform: rotate(210deg);
+        }
+
+        .rotating-number-8 {
+            transform: rotate(240deg);
+        }
+
+        .rotating-number-9 {
+            transform: rotate(270deg);
+        }
+
+        .rotating-number-10 {
+            transform: rotate(300deg);
+        }
+
+        .rotating-number-11 {
+            transform: rotate(330deg);
+        }
+
+        .rotating-number-12 {
+            transform: rotate(0deg);
+        }
+
+        .rotating-number span {
+            display: inline-block;
+            transform: rotate(-30deg);
+        }
+
+        .rotating-number-2 span {
+            transform: rotate(-60deg);
+        }
+
+        .rotating-number-3 span {
+            transform: rotate(-90deg);
+        }
+
+        .rotating-number-4 span {
+            transform: rotate(-120deg);
+        }
+
+        .rotating-number-5 span {
+            transform: rotate(-150deg);
+        }
+
+        .rotating-number-6 span {
+            transform: rotate(-180deg);
+        }
+
+        .rotating-number-7 span {
+            transform: rotate(-210deg);
+        }
+
+        .rotating-number-8 span {
+            transform: rotate(-240deg);
+        }
+
+        .rotating-number-9 span {
+            transform: rotate(-270deg);
+        }
+
+        .rotating-number-10 span {
+            transform: rotate(-300deg);
+        }
+
+        .rotating-number-11 span {
+            transform: rotate(-330deg);
+        }
+
+        .rotating-number-12 span {
+            transform: rotate(0deg);
+        }
+
+        .rotating-hand {
+            position: absolute;
+            bottom: 50%;
+            left: 50%;
+            transform-origin: bottom;
+            border-radius: 3px 3px 0 0;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+            transition: transform 0.6s cubic-bezier(0.4, 2.3, 0.6, 1);
+        }
+
+        .rotating-hour-hand {
+            width: 6px;
+            height: 28%;
+            background: linear-gradient(to top, #b0b0b0, #d0d0d0);
+            transform: translateX(-50%);
+            z-index: 3;
+        }
+
+        .rotating-minute-hand {
+            width: 4px;
+            height: 40%;
+            background: linear-gradient(to top, #cccccc, #eeeeee);
+            transform: translateX(-50%);
+            z-index: 4;
+        }
+
+        .rotating-second-hand {
+            width: 2px;
+            height: 45%;
+            background: linear-gradient(to top, #ff6b6b, #ff8e8e);
+            transform: translateX(-50%) rotate(0deg);
+            z-index: 5;
+        }
+
+        .rotating-center-dot {
+            width: 14px;
+            height: 14px;
+            background: radial-gradient(circle, #ff6b6b, #cc5555);
+            border: 2px solid #2c2c2c;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 6;
+            box-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
+        }
+
+        /* Binary Clock Styles */
+        .binary-clock {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 12px;
+            justify-content: center;
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .binary-column {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .binary-dot {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.15);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .binary-dot::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 6px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.4s ease;
+        }
+
+        .binary-dot.active {
+            background: radial-gradient(circle, #ff6b6b, #cc5555);
+            border-color: #ff6b6b;
+            box-shadow:
+                0 0 15px rgba(255, 107, 107, 0.6),
+                inset 0 0 10px rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+
+        .binary-dot.active::before {
+            background: rgba(255, 255, 255, 0.8);
+            width: 8px;
+            height: 8px;
+        }
+
+        .binary-label {
+            font-size: 0.75rem;
+            color: #888;
+            margin-top: 8px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Word Clock Styles */
+        .word-clock {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-align: center;
+            padding: 1.5rem;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            min-height: 200px;
+            align-content: start;
+        }
+
+        .word {
+            padding: 8px 6px;
+            border-radius: 6px;
+            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+            color: rgba(255, 255, 255, 0.25);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid transparent;
+            cursor: default;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .word::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .word.active {
+            background: linear-gradient(135deg, #4ecdc4, #45b7d1);
+            color: white;
+            border-color: rgba(78, 205, 196, 0.5);
+            box-shadow:
+                0 0 15px rgba(78, 205, 196, 0.4),
+                inset 0 0 10px rgba(255, 255, 255, 0.1);
+            transform: scale(1.05);
+        }
+
+        .word.active::before {
+            left: 100%;
+        }
+
+        /* Special styling for time indicators */
+        .word[data-word="IT"],
+        .word[data-word="IS"] {
+            grid-column: span 1;
+        }
+
+        .word[data-word="QUARTER"],
+        .word[data-word="TWENTY"],
+        .word[data-word="MINUTES"] {
+            grid-column: span 1;
+        }
+
+        .word[data-word="OCLOCK"] {
+            grid-column: span 2;
+        }
+
+        /* Pie Chart Clock Styles */
+        .pie-clock {
+            position: relative;
+            width: 280px;
+            height: 280px;
+            margin: 0 auto;
+        }
+
+        .pie-svg {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+            filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.3));
+        }
+
+        .pie-track {
+            fill: none;
+            stroke: rgba(255, 255, 255, 0.1);
+        }
+
+        .pie-slice {
+            fill: none;
+            transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+            filter: drop-shadow(0 0 8px rgba(0, 0, 0, 0.3));
+        }
+
+        .pie-slice.hours {
+            stroke: #ff6b6b;
+            filter: drop-shadow(0 0 12px rgba(255, 107, 107, 0.6));
+        }
+
+        .pie-slice.minutes {
+            stroke: #4ecdc4;
+            filter: drop-shadow(0 0 10px rgba(78, 205, 196, 0.6));
+        }
+
+        .pie-slice.seconds {
+            stroke: #45b7d1;
+            filter: drop-shadow(0 0 8px rgba(69, 183, 209, 0.6));
+        }
+
+        .pie-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .pie-time {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 8px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .pie-legend {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.6rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .legend-color {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .hours-color {
+            background: #ff6b6b;
+        }
+
+        .minutes-color {
+            background: #4ecdc4;
+        }
+
+        .seconds-color {
+            background: #45b7d1;
+        }
+
+        /* Flip Clock Styles */
+        .flip-clock {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            padding: 1rem;
+        }
+
+        .flip-unit {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .flip-digit {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #2c2c2c, #3c3c3c, #2c2c2c);
+            border-radius: 8px;
+            padding: 12px 16px;
+            border: 2px solid #555;
+            box-shadow:
+                inset 0 2px 4px rgba(255, 255, 255, 0.1),
+                inset 0 -2px 4px rgba(0, 0, 0, 0.3),
+                0 4px 8px rgba(0, 0, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+            color: #e0e0e0;
+            min-width: 60px;
+            text-align: center;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .flip-digit::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #666, transparent);
+            z-index: 1;
+        }
+
+        .flip-digit::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg,
+                    rgba(255, 255, 255, 0.1) 0%,
+                    transparent 50%,
+                    rgba(0, 0, 0, 0.2) 100%);
+            pointer-events: none;
+        }
+
+        .flip-digit:hover {
+            transform: scale(1.05);
+            box-shadow:
+                inset 0 2px 4px rgba(255, 255, 255, 0.2),
+                inset 0 -2px 4px rgba(0, 0, 0, 0.4),
+                0 6px 12px rgba(0, 0, 0, 0.5);
+        }
+
+        .flip-label {
+            font-size: 0.7rem;
+            color: #888;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .flip-separator {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #666;
+            margin: 0 4px;
+            text-shadow: 0 0 10px rgba(102, 102, 102, 0.5);
+            animation: blink 2s infinite;
+        }
+
+        @keyframes blink {
+
+            0%,
+            50% {
+                opacity: 1;
+            }
+
+            51%,
+            100% {
+                opacity: 0.3;
+            }
+        }
+
+        /* Dot Matrix Clock Styles */
+        .dot-matrix-wrapper {
+            position: relative;
+            background: #0a0a0a;
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 2px solid #333;
+            box-shadow:
+                inset 0 0 20px rgba(0, 0, 0, 0.8),
+                0 0 20px rgba(0, 255, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .dot-matrix {
+            display: grid;
+            grid-template-columns: repeat(25, 1fr);
+            gap: 2px;
+            justify-content: center;
+            margin: 0 auto;
+            max-width: 400px;
+        }
+
+        .matrix-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 2px;
+            background: rgba(0, 255, 0, 0.08);
+            border: 1px solid rgba(0, 255, 0, 0.1);
+            transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+        }
+
+        .matrix-dot::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 4px;
+            height: 4px;
+            background: rgba(0, 255, 0, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.2s ease;
+        }
+
+        .matrix-dot.active {
+            background: radial-gradient(circle, #00ff00, #00cc00);
+            border-color: #00ff00;
+            box-shadow:
+                0 0 8px rgba(0, 255, 0, 0.8),
+                inset 0 0 4px rgba(255, 255, 255, 0.3);
+            animation: matrixGlow 0.3s ease-out;
+        }
+
+        .matrix-dot.active::before {
+            background: rgba(255, 255, 255, 0.9);
+            width: 6px;
+            height: 6px;
+        }
+
+        @keyframes matrixGlow {
+            0% {
+                transform: scale(0.8);
+                box-shadow: 0 0 4px rgba(0, 255, 0, 0.4);
+            }
+
+            50% {
+                transform: scale(1.2);
+                box-shadow: 0 0 12px rgba(0, 255, 0, 1);
+            }
+
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 8px rgba(0, 255, 0, 0.8);
+            }
+        }
+
+        .matrix-scanline {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg,
+                    transparent,
+                    rgba(0, 255, 0, 0.6),
+                    transparent);
+            animation: scanline 2s linear infinite;
+        }
+
+        @keyframes scanline {
+            0% {
+                top: 0;
+                opacity: 1;
+            }
+
+            100% {
+                top: 100%;
+                opacity: 0;
+            }
+        }
+
+        /* Color Clock Styles */
+        .color-clock {
+            padding: 1rem;
+        }
+
+        .color-display {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .color-swatch {
+            width: 120px;
+            height: 120px;
+            border-radius: 12px;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            box-shadow:
+                0 0 20px rgba(0, 0, 0, 0.3),
+                inset 0 0 20px rgba(255, 255, 255, 0.1);
+            transition: all 1s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .color-swatch::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg,
+                    rgba(255, 255, 255, 0.1),
+                    transparent,
+                    rgba(255, 255, 255, 0.1));
+            animation: colorShimmer 3s linear infinite;
+        }
+
+        @keyframes colorShimmer {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .color-info {
+            text-align: left;
+        }
+
+        .color-time {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 8px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .color-code {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: #e0e0e0;
+            margin-bottom: 12px;
+            font-family: 'JetBrains Mono', monospace;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 4px 8px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        .color-breakdown {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .color-component {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+        }
+
+        .component-label {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .component-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 600;
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+
+        /* Neon Analog Clock Styles */
+        .neon-clock {
+            width: 280px;
+            height: 280px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .neon-clock-face {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: radial-gradient(circle, #0a0a0a, #1a1a1a);
+            border: 3px solid #333;
+            box-shadow:
+                0 0 30px rgba(0, 255, 255, 0.3),
+                inset 0 0 30px rgba(0, 0, 0, 0.8);
+            position: relative;
+        }
+
+        .hour-marker {
+            position: absolute;
+            width: 4px;
+            height: 20px;
+            background: linear-gradient(to bottom, #00ffff, #0080ff);
+            border-radius: 2px;
+            top: 10px;
+            left: 50%;
+            transform-origin: 50% 130px;
+            transform: translateX(-50%);
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+        }
+
+        .marker-12 {
+            transform: translateX(-50%) rotate(0deg);
+        }
+
+        .marker-1 {
+            transform: translateX(-50%) rotate(30deg);
+        }
+
+        .marker-2 {
+            transform: translateX(-50%) rotate(60deg);
+        }
+
+        .marker-3 {
+            transform: translateX(-50%) rotate(90deg);
+        }
+
+        .marker-4 {
+            transform: translateX(-50%) rotate(120deg);
+        }
+
+        .marker-5 {
+            transform: translateX(-50%) rotate(150deg);
+        }
+
+        .marker-6 {
+            transform: translateX(-50%) rotate(180deg);
+        }
+
+        .marker-7 {
+            transform: translateX(-50%) rotate(210deg);
+        }
+
+        .marker-8 {
+            transform: translateX(-50%) rotate(240deg);
+        }
+
+        .marker-9 {
+            transform: translateX(-50%) rotate(270deg);
+        }
+
+        .marker-10 {
+            transform: translateX(-50%) rotate(300deg);
+        }
+
+        .marker-11 {
+            transform: translateX(-50%) rotate(330deg);
+        }
+
+        .marker-12,
+        .marker-3,
+        .marker-6,
+        .marker-9 {
+            height: 30px;
+            width: 6px;
+            background: linear-gradient(to bottom, #ff0080, #ff4080);
+            box-shadow: 0 0 15px rgba(255, 0, 128, 0.9);
+        }
+
+        .neon-hand {
+            position: absolute;
+            bottom: 50%;
+            left: 50%;
+            transform-origin: bottom center;
+            border-radius: 2px 2px 0 0;
+            transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .neon-hour-hand {
+            width: 6px;
+            height: 80px;
+            background: linear-gradient(to top, #ff6b6b, #ff8e8e);
+            transform: translateX(-50%) rotate(0deg);
+            box-shadow: 0 0 15px rgba(255, 107, 107, 0.8);
+            z-index: 3;
+        }
+
+        .neon-minute-hand {
+            width: 4px;
+            height: 110px;
+            background: linear-gradient(to top, #4ecdc4, #7ed7d1);
+            transform: translateX(-50%) rotate(0deg);
+            box-shadow: 0 0 12px rgba(78, 205, 196, 0.8);
+            z-index: 4;
+        }
+
+        .neon-second-hand {
+            width: 2px;
+            height: 120px;
+            background: linear-gradient(to top, #45b7d1, #74c7e3);
+            transform: translateX(-50%) rotate(0deg);
+            box-shadow: 0 0 10px rgba(69, 183, 209, 0.9);
+            z-index: 5;
+        }
+
+        .neon-center {
+            width: 16px;
+            height: 16px;
+            background: radial-gradient(circle, #fff, #ddd);
+            border: 2px solid #333;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 6;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+        }
+
+        /* Wave Clock Styles */
+        .wave-clock {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .wave-container {
+            margin-bottom: 1rem;
+            background: #000;
+            border-radius: 8px;
+            padding: 10px;
+            border: 2px solid #333;
+        }
+
+        .wave-canvas {
+            width: 100%;
+            height: 150px;
+            display: block;
+            background: radial-gradient(ellipse at center, #001122, #000);
+        }
+
+        .wave-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .wave-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .wave-label {
+            font-size: 0.9rem;
+            color: #ccc;
+            min-width: 60px;
+            font-weight: 500;
+        }
+
+        .wave-bar {
+            flex: 1;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .wave-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wave-fill::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: waveShine 2s infinite;
+        }
+
+        @keyframes waveShine {
+            0% {
+                left: -100%;
+            }
+
+            100% {
+                left: 100%;
+            }
+        }
+
+        .wave-hours {
+            background: linear-gradient(90deg, #ff6b6b, #ff8e8e);
+            box-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
+        }
+
+        .wave-minutes {
+            background: linear-gradient(90deg, #4ecdc4, #7ed7d1);
+            box-shadow: 0 0 10px rgba(78, 205, 196, 0.5);
+        }
+
+        .wave-seconds {
+            background: linear-gradient(90deg, #45b7d1, #74c7e3);
+            box-shadow: 0 0 10px rgba(69, 183, 209, 0.5);
+        }
+
+        /* Particle Clock Styles */
+        .particle-clock {
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .particle-canvas {
+            width: 100%;
+            height: 200px;
+            display: block;
+            background: radial-gradient(ellipse at center, #000a1a, #000);
+            border-radius: 8px;
+            border: 2px solid #333;
+        }
+
+        .particle-legend {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .particle-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+
+        .particle-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            box-shadow: 0 0 8px;
+        }
+
+        .particle-dot.red {
+            background: #ff6b6b;
+            box-shadow: 0 0 8px rgba(255, 107, 107, 0.8);
+        }
+
+        .particle-dot.green {
+            background: #4ecdc4;
+            box-shadow: 0 0 8px rgba(78, 205, 196, 0.8);
+        }
+
+        .particle-dot.blue {
+            background: #45b7d1;
+            box-shadow: 0 0 8px rgba(69, 183, 209, 0.8);
+        }
+
+        /* Spiral Clock Styles */
+        .spiral-clock {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin: 0 auto;
+        }
+
+        .spiral-svg {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 0 20px rgba(0, 0, 0, 0.5));
+        }
+
+        .spiral-path {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            transition: stroke-dashoffset 1s cubic-bezier(0.25, 0.8, 0.25, 1);
+            filter: drop-shadow(0 0 8px rgba(0, 0, 0, 0.3));
+        }
+
+        .spiral-hours {
+            stroke: url(#spiralHoursGradient);
+            stroke-dasharray: 800;
+            stroke-dashoffset: 800;
+        }
+
+        .spiral-minutes {
+            stroke: url(#spiralMinutesGradient);
+            stroke-dasharray: 600;
+            stroke-dashoffset: 600;
+        }
+
+        .spiral-seconds {
+            stroke: url(#spiralSecondsGradient);
+            stroke-dasharray: 400;
+            stroke-dashoffset: 400;
+        }
+
+        .spiral-center {
+            fill: radial-gradient(circle, #fff, #ccc);
+            stroke: #333;
+            stroke-width: 2;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
+        }
+
+        .spiral-time {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: white;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 8px 12px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Liquid Clock Styles */
+        .liquid-clock {
+            padding: 1rem;
+        }
+
+        .liquid-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 20px;
+            height: 200px;
+            margin-bottom: 1rem;
+        }
+
+        .liquid-tube {
+            width: 60px;
+            height: 180px;
+            background: linear-gradient(to bottom,
+                    rgba(255, 255, 255, 0.1),
+                    rgba(255, 255, 255, 0.05));
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            border-radius: 30px;
+            position: relative;
+            overflow: hidden;
+            box-shadow:
+                inset 0 0 20px rgba(0, 0, 0, 0.3),
+                0 0 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .liquid-fill {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            border-radius: 0 0 27px 27px;
+            transition: height 1s cubic-bezier(0.25, 0.8, 0.25, 1);
+            overflow: hidden;
+        }
+
+        .liquid-fill::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 0;
+            right: 0;
+            height: 20px;
+            background: inherit;
+            border-radius: 50%;
+            animation: liquidWave 3s ease-in-out infinite;
+        }
+
+        @keyframes liquidWave {
+
+            0%,
+            100% {
+                transform: translateX(-10px) scale(1, 0.8);
+            }
+
+            50% {
+                transform: translateX(10px) scale(1, 1.2);
+            }
+        }
+
+        .liquid-hours {
+            background: linear-gradient(to top,
+                    #ff6b6b,
+                    rgba(255, 107, 107, 0.8));
+            box-shadow: 0 0 20px rgba(255, 107, 107, 0.5);
+        }
+
+        .liquid-minutes {
+            background: linear-gradient(to top,
+                    #4ecdc4,
+                    rgba(78, 205, 196, 0.8));
+            box-shadow: 0 0 20px rgba(78, 205, 196, 0.5);
+        }
+
+        .liquid-seconds {
+            background: linear-gradient(to top,
+                    #45b7d1,
+                    rgba(69, 183, 209, 0.8));
+            box-shadow: 0 0 20px rgba(69, 183, 209, 0.5);
+        }
+
+        .liquid-bubble {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            animation: bubbleRise 4s linear infinite;
+        }
+
+        .bubble-1 {
+            left: 20%;
+            animation-delay: 0s;
+        }
+
+        .bubble-2 {
+            right: 20%;
+            animation-delay: 2s;
+        }
+
+        @keyframes bubbleRise {
+            0% {
+                bottom: 0;
+                opacity: 0;
+                transform: scale(0.5);
+            }
+
+            10% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            90% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            100% {
+                bottom: 100%;
+                opacity: 0;
+                transform: scale(0.5);
+            }
+        }
+
+        .liquid-label {
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #ccc;
+        }
+
+        .liquid-base {
+            height: 20px;
+            background: linear-gradient(to right, #333, #555, #333);
+            border-radius: 10px;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .liquid-pump {
+            width: 40px;
+            height: 10px;
+            background: linear-gradient(to right, #666, #888, #666);
+            border-radius: 5px;
+            animation: pump 2s ease-in-out infinite;
+        }
+
+        @keyframes pump {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.2, 0.8);
+            }
+        }
+
+        /* Digital Rain Clock Styles */
+        .matrix-rain-clock {
+            position: relative;
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 2px solid #00ff00;
+            box-shadow:
+                0 0 30px rgba(0, 255, 0, 0.3),
+                inset 0 0 30px rgba(0, 0, 0, 0.8);
+        }
+
+        .rain-canvas {
+            width: 100%;
+            height: 250px;
+            display: block;
+            background: #000;
+        }
+
+        .matrix-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .matrix-time {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #00ff00;
+            font-family: 'JetBrains Mono', monospace;
+            text-shadow:
+                0 0 10px #00ff00,
+                0 0 20px #00ff00,
+                0 0 30px #00ff00;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            border: 1px solid #00ff00;
+            animation: matrixGlow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes matrixGlow {
+            0% {
+                text-shadow:
+                    0 0 5px #00ff00,
+                    0 0 10px #00ff00,
+                    0 0 15px #00ff00;
+            }
+
+            100% {
+                text-shadow:
+                    0 0 10px #00ff00,
+                    0 0 20px #00ff00,
+                    0 0 30px #00ff00,
+                    0 0 40px #00ff00;
+            }
+        }
+
+        /* Steampunk Clock Styles */
+        .steampunk-clock {
+            position: relative;
+            width: 320px;
+            height: 320px;
+            margin: 0 auto;
+        }
+
+        .steampunk-frame {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            background:
+                radial-gradient(circle at 30% 30%, rgba(139, 69, 19, 0.3), transparent 50%),
+                radial-gradient(circle at 70% 70%, rgba(205, 133, 63, 0.2), transparent 50%),
+                linear-gradient(135deg, #8b4513, #654321);
+            border-radius: 50%;
+            border: 8px solid #8b4513;
+            box-shadow:
+                0 0 40px rgba(0, 0, 0, 0.6),
+                inset 0 0 40px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
+        }
+
+        .gear {
+            position: absolute;
+            border-radius: 50%;
+            background:
+                radial-gradient(circle, #8b4513, #654321),
+                conic-gradient(from 0deg, #8b4513, #654321, #8b4513);
+            border: 3px solid #5d4037;
+            animation: gearRotate 10s linear infinite;
+        }
+
+        .gear::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20%;
+            height: 20%;
+            background: #654321;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            border: 2px solid #5d4037;
+        }
+
+        .gear-large {
+            width: 80px;
+            height: 80px;
+            top: 20px;
+            right: 30px;
+            animation-duration: 15s;
+        }
+
+        .gear-medium {
+            width: 60px;
+            height: 60px;
+        }
+
+        .gear-2 {
+            bottom: 40px;
+            left: 20px;
+            animation-duration: 12s;
+            animation-direction: reverse;
+        }
+
+        .gear-4 {
+            top: 50px;
+            left: 40px;
+            animation-duration: 8s;
+        }
+
+        .gear-small {
+            width: 40px;
+            height: 40px;
+            bottom: 20px;
+            right: 50px;
+            animation-duration: 6s;
+            animation-direction: reverse;
+        }
+
+        @keyframes gearRotate {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .steampunk-face {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 200px;
+            height: 200px;
+            transform: translate(-50%, -50%);
+            background:
+                radial-gradient(circle, #f4e4bc, #d2b48c),
+                linear-gradient(45deg, transparent 45%, rgba(139, 69, 19, 0.1) 50%, transparent 55%);
+            border-radius: 50%;
+            border: 4px solid #8b4513;
+            box-shadow:
+                inset 0 0 30px rgba(0, 0, 0, 0.2),
+                0 0 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .roman-numeral {
+            position: absolute;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #8b4513;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .roman-12 {
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .roman-3 {
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .roman-6 {
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .roman-9 {
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .steampunk-hand {
+            position: absolute;
+            bottom: 50%;
+            left: 50%;
+            transform-origin: bottom center;
+            background: linear-gradient(to top, #8b4513, #a0522d);
+            border-radius: 2px 2px 0 0;
+            box-shadow: 2px 0 4px rgba(0, 0, 0, 0.3);
+            transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .steampunk-hand.hour-hand {
+            width: 6px;
+            height: 60px;
+            transform: translateX(-50%) rotate(0deg);
+            z-index: 3;
+        }
+
+        .steampunk-hand.minute-hand {
+            width: 4px;
+            height: 80px;
+            transform: translateX(-50%) rotate(0deg);
+            z-index: 4;
+        }
+
+        .steampunk-hand.second-hand {
+            width: 2px;
+            height: 90px;
+            background: linear-gradient(to top, #cd853f, #daa520);
+            transform: translateX(-50%) rotate(0deg);
+            z-index: 5;
+        }
+
+        .steampunk-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 16px;
+            height: 16px;
+            background: radial-gradient(circle, #daa520, #b8860b);
+            border: 2px solid #8b4513;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 6;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .steam {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.6), transparent);
+            border-radius: 50%;
+            animation: steamRise 4s linear infinite;
+        }
+
+        .steam-1 {
+            top: 10px;
+            left: 10px;
+            animation-delay: 0s;
+        }
+
+        .steam-2 {
+            top: 20px;
+            right: 15px;
+            animation-delay: 1.5s;
+        }
+
+        .steam-3 {
+            bottom: 15px;
+            left: 20px;
+            animation-delay: 3s;
+        }
+
+        @keyframes steamRise {
+            0% {
+                opacity: 0;
+                transform: translateY(0) scale(0.5);
+            }
+
+            20% {
+                opacity: 0.8;
+                transform: translateY(-10px) scale(1);
+            }
+
+            80% {
+                opacity: 0.8;
+                transform: translateY(-30px) scale(1.2);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateY(-50px) scale(1.5);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <h1>🕐 Creative Clock Collection</h1>
+        <p>Explore innovative ways to visualize time</p>
+    </header>
+
+    <div class="clocks-grid">
+        <!-- Rotating Face Clock -->
+        <div class="clock-container">
+            <h3 class="clock-title">Rotating Face Clock</h3>
+            <p class="clock-description">The entire clock face rotates while the second hand stays fixed</p>
+            <div class="rotating-clock">
+                <div class="rotating-clock-face" data-rotating-face>
+                    <!-- Numbers -->
+                    <div class="rotating-number rotating-number-1"><span>1</span></div>
+                    <div class="rotating-number rotating-number-2"><span>2</span></div>
+                    <div class="rotating-number rotating-number-3"><span>3</span></div>
+                    <div class="rotating-number rotating-number-4"><span>4</span></div>
+                    <div class="rotating-number rotating-number-5"><span>5</span></div>
+                    <div class="rotating-number rotating-number-6"><span>6</span></div>
+                    <div class="rotating-number rotating-number-7"><span>7</span></div>
+                    <div class="rotating-number rotating-number-8"><span>8</span></div>
+                    <div class="rotating-number rotating-number-9"><span>9</span></div>
+                    <div class="rotating-number rotating-number-10"><span>10</span></div>
+                    <div class="rotating-number rotating-number-11"><span>11</span></div>
+                    <div class="rotating-number rotating-number-12"><span>12</span></div>
+                    <!-- Hour and Minute hands -->
+                    <div class="rotating-hand rotating-hour-hand" data-rotating-hour></div>
+                    <div class="rotating-hand rotating-minute-hand" data-rotating-minute></div>
+                </div>
+                <!-- Static second hand -->
+                <div class="rotating-hand rotating-second-hand"></div>
+                <div class="rotating-center-dot"></div>
+            </div>
+            <div class="time-display" id="rotatingTime">Loading...</div>
+        </div>
+
+        <!-- Binary Clock -->
+        <div class="clock-container">
+            <h3 class="clock-title">Binary Clock</h3>
+            <p class="clock-description">Time displayed in binary format using illuminated dots</p>
+            <div class="binary-clock" id="binaryClock">
+                <div class="binary-column">
+                    <div class="binary-dot" data-bit="5"></div>
+                    <div class="binary-dot" data-bit="4"></div>
+                    <div class="binary-dot" data-bit="3"></div>
+                    <div class="binary-dot" data-bit="2"></div>
+                    <div class="binary-dot" data-bit="1"></div>
+                    <div class="binary-dot" data-bit="0"></div>
+                    <div class="binary-label">H1</div>
+                </div>
+                <div class="binary-column">
+                    <div class="binary-dot" data-bit="5"></div>
+                    <div class="binary-dot" data-bit="4"></div>
+                    <div class="binary-dot" data-bit="3"></div>
+                    <div class="binary-dot" data-bit="2"></div>
+                    <div class="binary-dot" data-bit="1"></div>
+                    <div class="binary-dot" data-bit="0"></div>
+                    <div class="binary-label">H2</div>
+                </div>
+                <div class="binary-column">
+                    <div class="binary-dot" data-bit="5"></div>
+                    <div class="binary-dot" data-bit="4"></div>
+                    <div class="binary-dot" data-bit="3"></div>
+                    <div class="binary-dot" data-bit="2"></div>
+                    <div class="binary-dot" data-bit="1"></div>
+                    <div class="binary-dot" data-bit="0"></div>
+                    <div class="binary-label">M1</div>
+                </div>
+                <div class="binary-column">
+                    <div class="binary-dot" data-bit="5"></div>
+                    <div class="binary-dot" data-bit="4"></div>
+                    <div class="binary-dot" data-bit="3"></div>
+                    <div class="binary-dot" data-bit="2"></div>
+                    <div class="binary-dot" data-bit="1"></div>
+                    <div class="binary-dot" data-bit="0"></div>
+                    <div class="binary-label">M2</div>
+                </div>
+                <div class="binary-column">
+                    <div class="binary-dot" data-bit="5"></div>
+                    <div class="binary-dot" data-bit="4"></div>
+                    <div class="binary-dot" data-bit="3"></div>
+                    <div class="binary-dot" data-bit="2"></div>
+                    <div class="binary-dot" data-bit="1"></div>
+                    <div class="binary-dot" data-bit="0"></div>
+                    <div class="binary-label">S1</div>
+                </div>
+                <div class="binary-column">
+                    <div class="binary-dot" data-bit="5"></div>
+                    <div class="binary-dot" data-bit="4"></div>
+                    <div class="binary-dot" data-bit="3"></div>
+                    <div class="binary-dot" data-bit="2"></div>
+                    <div class="binary-dot" data-bit="1"></div>
+                    <div class="binary-dot" data-bit="0"></div>
+                    <div class="binary-label">S2</div>
+                </div>
+            </div>
+            <div class="time-display" id="binaryTime">Loading...</div>
+        </div>
+
+        <!-- Word Clock -->
+        <div class="clock-container">
+            <h3 class="clock-title">Word Clock</h3>
+            <p class="clock-description">Time spelled out in words with illuminated text</p>
+            <div class="word-clock" id="wordClock">
+                <span class="word" data-word="IT">IT</span>
+                <span class="word" data-word="IS">IS</span>
+                <span class="word" data-word="HALF">HALF</span>
+                <span class="word" data-word="TEN">TEN</span>
+                <span class="word" data-word="QUARTER">QUARTER</span>
+                <span class="word" data-word="TWENTY">TWENTY</span>
+                <span class="word" data-word="FIVE">FIVE</span>
+                <span class="word" data-word="MINUTES">MINUTES</span>
+                <span class="word" data-word="TO">TO</span>
+                <span class="word" data-word="PAST">PAST</span>
+                <span class="word" data-word="ONE">ONE</span>
+                <span class="word" data-word="TWO">TWO</span>
+                <span class="word" data-word="THREE">THREE</span>
+                <span class="word" data-word="FOUR">FOUR</span>
+                <span class="word" data-word="FIVE_HOUR">FIVE</span>
+                <span class="word" data-word="SIX">SIX</span>
+                <span class="word" data-word="SEVEN">SEVEN</span>
+                <span class="word" data-word="EIGHT">EIGHT</span>
+                <span class="word" data-word="NINE">NINE</span>
+                <span class="word" data-word="TEN_HOUR">TEN</span>
+                <span class="word" data-word="ELEVEN">ELEVEN</span>
+                <span class="word" data-word="TWELVE">TWELVE</span>
+                <span class="word" data-word="OCLOCK">O'CLOCK</span>
+                <span class="word" data-word="AM">AM</span>
+                <span class="word" data-word="PM">PM</span>
+            </div>
+            <div class="time-display" id="wordTime">Loading...</div>
+        </div>
+
+        <!-- Pie Chart Clock -->
+        <div class="clock-container">
+            <h3 class="clock-title">Pie Chart Clock</h3>
+            <p class="clock-description">Time visualized as concentric progress circles</p>
+            <div class="pie-clock">
+                <svg viewBox="0 0 200 200" class="pie-svg">
+                    <!-- Outer ring for hours -->
+                    <circle cx="100" cy="100" r="85" class="pie-track" stroke-width="12" />
+                    <circle cx="100" cy="100" r="85" class="pie-slice hours" id="hoursSlice" stroke-width="12"
+                        stroke-dasharray="0 534.1" stroke-linecap="round" />
+                    <!-- Middle ring for minutes -->
+                    <circle cx="100" cy="100" r="65" class="pie-track" stroke-width="10" />
+                    <circle cx="100" cy="100" r="65" class="pie-slice minutes" id="minutesSlice" stroke-width="10"
+                        stroke-dasharray="0 408.4" stroke-linecap="round" />
+                    <!-- Inner ring for seconds -->
+                    <circle cx="100" cy="100" r="45" class="pie-track" stroke-width="8" />
+                    <circle cx="100" cy="100" r="45" class="pie-slice seconds" id="secondsSlice" stroke-width="8"
+                        stroke-dasharray="0 282.7" stroke-linecap="round" />
+                </svg>
+                <div class="pie-center">
+                    <div class="pie-time" id="pieTime">Loading...</div>
+                    <div class="pie-legend">
+                        <div class="legend-item">
+                            <span class="legend-color hours-color"></span>
+                            <span>Hours</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color minutes-color"></span>
+                            <span>Minutes</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color seconds-color"></span>
+                            <span>Seconds</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="time-display" id="pieTimeDisplay">Loading...</div>
+        </div>
+
+
+        <!-- Flip Clock -->
+        <div class="clock-container">
+            <h3 class="clock-title">Digital Flip Clock</h3>
+            <p class="clock-description">Retro-style flip digits with smooth transitions</p>
+            <div class="flip-clock">
+                <div class="flip-unit">
+                    <div class="flip-digit" id="hour1">0</div>
+                    <div class="flip-label">H</div>
+                </div>
+                <div class="flip-unit">
+                    <div class="flip-digit" id="hour2">0</div>
+                    <div class="flip-label">H</div>
+                </div>
+                <div class="flip-separator">:</div>
+                <div class="flip-unit">
+                    <div class="flip-digit" id="min1">0</div>
+                    <div class="flip-label">M</div>
+                </div>
+                <div class="flip-unit">
+                    <div class="flip-digit" id="min2">0</div>
+                    <div class="flip-label">M</div>
+                </div>
+                <div class="flip-separator">:</div>
+                <div class="flip-unit">
+                    <div class="flip-digit" id="sec1">0</div>
+                    <div class="flip-label">S</div>
+                </div>
+                <div class="flip-unit">
+                    <div class="flip-digit" id="sec2">0</div>
+                    <div class="flip-label">S</div>
+                </div>
+            </div>
+            <div class="time-display" id="flipTime">Loading...</div>
+        </div>
+
+        <!-- Dot Matrix Clock -->
+        <div class="clock-container">
+            <h3 class="clock-title">Dot Matrix Clock</h3>
+            <p class="clock-description">LED-style display with pixelated time representation</p>
+            <div class="dot-matrix-wrapper">
+                <div class="dot-matrix" id="dotMatrix">
+                    <!-- 25 x 7 dots matrix will be generated by JavaScript -->
+                </div>
+                <div class="matrix-scanline"></div>
+            </div>
+            <div class="time-display" id="matrixTime">Loading...</div>
+        </div>
+
+        <!-- Color Clock -->
+        <div class="clock-container">
+            <h3 class="clock-title">Hexadecimal Color Clock</h3>
+            <p class="clock-description">Time converted to hexadecimal color values</p>
+            <div class="color-clock" id="colorClock">
+                <div class="color-display">
+                    <div class="color-swatch" id="colorSwatch"></div>
+                    <div class="color-info">
+                        <div class="color-time" id="colorTime">Loading...</div>
+                        <div class="color-code">
+                            #<span id="colorCode">000000</span>
+                        </div>
+                        <div class="color-breakdown">
+                            <div class="color-component">
+                                <span class="component-label">Hours (Red):</span>
+                                <span class="component-value" id="redValue">00</span>
+                            </div>
+                            <div class="color-component">
+                                <span class="component-label">Minutes (Green):</span>
+                                <span class="component-value" id="greenValue">00</span>
+                            </div>
+                            <div class="color-component">
+                                <span class="component-label">Seconds (Blue):</span>
+                                <span class="component-value" id="blueValue">00</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="time-display" id="colorTimeDisplay">Loading...</div>
+        </div>
+
+        <!-- Analog Neon Clock -->
+        <div class="clock-container">
+            <h3 class="clock-title">Neon Analog Clock</h3>
+            <p class="clock-description">Classic analog clock with neon glow effects</p>
+            <div class="neon-clock">
+                <div class="neon-clock-face">
+                    <!-- Hour markers -->
+                    <div class="hour-marker marker-12"></div>
+                    <div class="hour-marker marker-1"></div>
+                    <div class="hour-marker marker-2"></div>
+                    <div class="hour-marker marker-3"></div>
+                    <div class="hour-marker marker-4"></div>
+                    <div class="hour-marker marker-5"></div>
+                    <div class="hour-marker marker-6"></div>
+                    <div class="hour-marker marker-7"></div>
+                    <div class="hour-marker marker-8"></div>
+                    <div class="hour-marker marker-9"></div>
+                    <div class="hour-marker marker-10"></div>
+                    <div class="hour-marker marker-11"></div>
+                    <!-- Clock hands -->
+                    <div class="neon-hand neon-hour-hand" id="neonHourHand"></div>
+                    <div class="neon-hand neon-minute-hand" id="neonMinuteHand"></div>
+                    <div class="neon-hand neon-second-hand" id="neonSecondHand"></div>
+                    <div class="neon-center"></div>
+                </div>
+            </div>
+            <div class="time-display" id="neonTime">Loading...</div>
+        </div>
+
+        <!-- Wave Clock -->
+        <div class="clock-container">
+            <h3 class="clock-title">Wave Frequency Clock</h3>
+            <p class="clock-description">Time represented as audio waveform frequencies</p>
+            <div class="wave-clock">
+                <div class="wave-container">
+                    <canvas class="wave-canvas" id="waveCanvas" width="300" height="150"></canvas>
+                </div>
+                <div class="wave-controls">
+                    <div class="wave-info">
+                        <div class="wave-label">Hours</div>
+                        <div class="wave-bar">
+                            <div class="wave-fill wave-hours" id="waveHours"></div>
+                        </div>
+                    </div>
+                    <div class="wave-info">
+                        <div class="wave-label">Minutes</div>
+                        <div class="wave-bar">
+                            <div class="wave-fill wave-minutes" id="waveMinutes"></div>
+                        </div>
+                    </div>
+                    <div class="wave-info">
+                        <div class="wave-label">Seconds</div>
+                        <div class="wave-bar">
+                            <div class="wave-fill wave-seconds" id="waveSeconds"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="time-display" id="waveTime">Loading...</div>
+        </div>
+
+        <!-- Particle Clock -->
+        <div class="clock-container">
+            <h3 class="clock-title">Particle System Clock</h3>
+            <p class="clock-description">Time displayed through animated particle formations</p>
+            <div class="particle-clock">
+                <canvas class="particle-canvas" id="particleCanvas" width="350" height="200"></canvas>
+                <div class="particle-legend">
+                    <div class="particle-info">
+                        <span class="particle-dot red"></span>
+                        <span>Hours</span>
+                    </div>
+                    <div class="particle-info">
+                        <span class="particle-dot green"></span>
+                        <span>Minutes</span>
+                    </div>
+                    <div class="particle-info">
+                        <span class="particle-dot blue"></span>
+                        <span>Seconds</span>
+                    </div>
+                </div>
+            </div>
+            <div class="time-display" id="particleTime">Loading...</div>
+        </div>
+
+        <!-- Spiral Clock -->
+        <div class="clock-container">
+            <h3 class="clock-title">Fibonacci Spiral Clock</h3>
+            <p class="clock-description">Time flows along mathematical spiral patterns</p>
+            <div class="spiral-clock">
+                <svg class="spiral-svg" viewBox="0 0 300 300">
+                    <!-- Spiral paths -->
+                    <path class="spiral-path spiral-hours" id="spiralHours"
+                        d="M150,150 Q150,50 250,150 Q150,250 50,150 Q150,50 150,150" fill="none" stroke-width="8"
+                        stroke-linecap="round" />
+                    <path class="spiral-path spiral-minutes" id="spiralMinutes"
+                        d="M150,150 Q150,75 225,150 Q150,225 75,150 Q150,75 150,150" fill="none" stroke-width="6"
+                        stroke-linecap="round" />
+                    <path class="spiral-path spiral-seconds" id="spiralSeconds"
+                        d="M150,150 Q150,100 200,150 Q150,200 100,150 Q150,100 150,150" fill="none" stroke-width="4"
+                        stroke-linecap="round" />
+                    <!-- Center point -->
+                    <circle cx="150" cy="150" r="8" class="spiral-center" />
+                </svg>
+                <div class="spiral-time" id="spiralTimeDisplay">Loading...</div>
+            </div>
+            <div class="time-display" id="spiralTime">Loading...</div>
+        </div>
+
+        <!-- Liquid Clock -->
+        <div class="clock-container">
+            <h3 class="clock-title">Liquid Flow Clock</h3>
+            <p class="clock-description">Time visualized as flowing liquid levels</p>
+            <div class="liquid-clock">
+                <div class="liquid-container">
+                    <div class="liquid-tube tube-hours">
+                        <div class="liquid-fill liquid-hours" id="liquidHours"></div>
+                        <div class="liquid-bubble bubble-1"></div>
+                        <div class="liquid-bubble bubble-2"></div>
+                        <div class="liquid-label">H</div>
+                    </div>
+                    <div class="liquid-tube tube-minutes">
+                        <div class="liquid-fill liquid-minutes" id="liquidMinutes"></div>
+                        <div class="liquid-bubble bubble-1"></div>
+                        <div class="liquid-bubble bubble-2"></div>
+                        <div class="liquid-label">M</div>
+                    </div>
+                    <div class="liquid-tube tube-seconds">
+                        <div class="liquid-fill liquid-seconds" id="liquidSeconds"></div>
+                        <div class="liquid-bubble bubble-1"></div>
+                        <div class="liquid-bubble bubble-2"></div>
+                        <div class="liquid-label">S</div>
+                    </div>
+                </div>
+                <div class="liquid-base">
+                    <div class="liquid-pump"></div>
+                </div>
+            </div>
+            <div class="time-display" id="liquidTime">Loading...</div>
+        </div>
+
+
+        <!-- Digital Rain Clock -->
+        <div class="clock-container">
+            <h3 class="clock-title">Matrix Digital Rain Clock</h3>
+            <p class="clock-description">Time hidden within cascading digital characters</p>
+            <div class="matrix-rain-clock">
+                <canvas class="rain-canvas" id="rainCanvas" width="350" height="250"></canvas>
+                <div class="matrix-overlay">
+                    <div class="matrix-time" id="matrixRainTime">Loading...</div>
+                </div>
+            </div>
+            <div class="time-display" id="rainTime">Loading...</div>
+        </div>
+
+        <!-- Steampunk Gear Clock -->
+        <div class="clock-container">
+            <h3 class="clock-title">Steampunk Gear Clock</h3>
+            <p class="clock-description">Victorian-era mechanical timepiece with rotating gears</p>
+            <div class="steampunk-clock">
+                <div class="steampunk-frame">
+                    <!-- Background gears -->
+                    <div class="gear gear-large gear-1"></div>
+                    <div class="gear gear-medium gear-2"></div>
+                    <div class="gear gear-small gear-3"></div>
+                    <div class="gear gear-medium gear-4"></div>
+
+                    <!-- Main clock face -->
+                    <div class="steampunk-face">
+                        <div class="roman-numeral roman-12">XII</div>
+                        <div class="roman-numeral roman-3">III</div>
+                        <div class="roman-numeral roman-6">VI</div>
+                        <div class="roman-numeral roman-9">IX</div>
+
+                        <!-- Clock hands -->
+                        <div class="steampunk-hand hour-hand" id="steampunkHour"></div>
+                        <div class="steampunk-hand minute-hand" id="steampunkMinute"></div>
+                        <div class="steampunk-hand second-hand" id="steampunkSecond"></div>
+                        <div class="steampunk-center"></div>
+                    </div>
+
+                    <!-- Steam effects -->
+                    <div class="steam steam-1"></div>
+                    <div class="steam steam-2"></div>
+                    <div class="steam steam-3"></div>
+                </div>
+            </div>
+            <div class="time-display" id="steampunkTime">Loading...</div>
+        </div>
+
+    </div>
+
+    <footer style="text-align: center; padding: 2rem; color: rgba(255,255,255,0.6);">
+        <p>🕐 Creative Clock Collection - Exploring Time Through Design 🕐</p>
+    </footer>
+
+    <script>
+        // Global variables for all clocks
+        let animationFrameId;
+
+        // Digital patterns for dot matrix display (5x7 matrix)
+        const digitPatterns = {
+            0: [
+                [0, 1, 1, 1, 0],
+                [1, 0, 0, 0, 1],
+                [1, 0, 0, 0, 1],
+                [1, 0, 0, 0, 1],
+                [1, 0, 0, 0, 1],
+                [1, 0, 0, 0, 1],
+                [0, 1, 1, 1, 0]
+            ],
+            1: [
+                [0, 0, 1, 0, 0],
+                [0, 1, 1, 0, 0],
+                [0, 0, 1, 0, 0],
+                [0, 0, 1, 0, 0],
+                [0, 0, 1, 0, 0],
+                [0, 0, 1, 0, 0],
+                [0, 1, 1, 1, 0]
+            ],
+            2: [
+                [0, 1, 1, 1, 0],
+                [1, 0, 0, 0, 1],
+                [0, 0, 0, 0, 1],
+                [0, 0, 1, 1, 0],
+                [0, 1, 0, 0, 0],
+                [1, 0, 0, 0, 0],
+                [1, 1, 1, 1, 1]
+            ],
+            3: [
+                [0, 1, 1, 1, 0],
+                [1, 0, 0, 0, 1],
+                [0, 0, 0, 0, 1],
+                [0, 0, 1, 1, 0],
+                [0, 0, 0, 0, 1],
+                [1, 0, 0, 0, 1],
+                [0, 1, 1, 1, 0]
+            ],
+            4: [
+                [0, 0, 0, 1, 0],
+                [0, 0, 1, 1, 0],
+                [0, 1, 0, 1, 0],
+                [1, 0, 0, 1, 0],
+                [1, 1, 1, 1, 1],
+                [0, 0, 0, 1, 0],
+                [0, 0, 0, 1, 0]
+            ],
+            5: [
+                [1, 1, 1, 1, 1],
+                [1, 0, 0, 0, 0],
+                [1, 1, 1, 1, 0],
+                [0, 0, 0, 0, 1],
+                [0, 0, 0, 0, 1],
+                [1, 0, 0, 0, 1],
+                [0, 1, 1, 1, 0]
+            ],
+            6: [
+                [0, 1, 1, 1, 0],
+                [1, 0, 0, 0, 1],
+                [1, 0, 0, 0, 0],
+                [1, 1, 1, 1, 0],
+                [1, 0, 0, 0, 1],
+                [1, 0, 0, 0, 1],
+                [0, 1, 1, 1, 0]
+            ],
+            7: [
+                [1, 1, 1, 1, 1],
+                [0, 0, 0, 0, 1],
+                [0, 0, 0, 1, 0],
+                [0, 0, 1, 0, 0],
+                [0, 1, 0, 0, 0],
+                [0, 1, 0, 0, 0],
+                [0, 1, 0, 0, 0]
+            ],
+            8: [
+                [0, 1, 1, 1, 0],
+                [1, 0, 0, 0, 1],
+                [1, 0, 0, 0, 1],
+                [0, 1, 1, 1, 0],
+                [1, 0, 0, 0, 1],
+                [1, 0, 0, 0, 1],
+                [0, 1, 1, 1, 0]
+            ],
+            9: [
+                [0, 1, 1, 1, 0],
+                [1, 0, 0, 0, 1],
+                [1, 0, 0, 0, 1],
+                [0, 1, 1, 1, 1],
+                [0, 0, 0, 0, 1],
+                [1, 0, 0, 0, 1],
+                [0, 1, 1, 1, 0]
+            ],
+            ':': [
+                [0, 0, 0, 0, 0],
+                [0, 0, 1, 0, 0],
+                [0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0],
+                [0, 0, 1, 0, 0],
+                [0, 0, 0, 0, 0]
+            ]
+        };
+
+        // Initialize all clocks
+        function initializeClocks() {
+            initDotMatrix();
+            initWaveCanvas();
+            initParticleCanvas();
+            initRainCanvas();
+
+            // Start the main update loop
+            updateAllClocks();
+            setInterval(updateAllClocks, 1000);
+
+            // Start canvas animations
+            animateCanvases();
+        }
+
+        // Initialize dot matrix grid
+        function initDotMatrix() {
+            const matrix = document.getElementById('dotMatrix');
+            if (!matrix) return;
+
+            matrix.innerHTML = '';
+            // Create 25 x 7 grid (175 dots total)
+            for (let i = 0; i < 175; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'matrix-dot';
+                matrix.appendChild(dot);
+            }
+        }
+
+        // Main update function for all clocks
+        function updateAllClocks() {
+            const now = new Date();
+            const hours = now.getHours();
+            const minutes = now.getMinutes();
+            const seconds = now.getSeconds();
+
+            // Update all clock types
+            updateRotatingClock(hours, minutes, seconds);
+            updateBinaryClock(hours, minutes, seconds);
+            updateWordClock(hours, minutes);
+            updatePieClock(hours, minutes, seconds);
+            updateFlipClock(hours, minutes, seconds);
+            updateDotMatrix(hours, minutes, seconds);
+            updateColorClock(hours, minutes, seconds);
+            updateNeonClock(hours, minutes, seconds);
+            updateWaveClock(hours, minutes, seconds);
+            updateSpiralClock(hours, minutes, seconds);
+            updateLiquidClock(hours, minutes, seconds);
+            updateMatrixRainClock(hours, minutes, seconds);
+            updateSteampunkClock(hours, minutes, seconds);
+        }
+
+        // Rotating Face Clock Update
+        function updateRotatingClock(h, m, s) {
+            const hourHand = document.querySelector('[data-rotating-hour]');
+            const minuteHand = document.querySelector('[data-rotating-minute]');
+            const clockFace = document.querySelector('[data-rotating-face]');
+            const timeDisplay = document.getElementById('rotatingTime');
+
+            if (!hourHand || !minuteHand || !clockFace || !timeDisplay) return;
+
+            // Calculate rotations
+            const faceRotation = s * -6;
+            const minutesRotation = m * 6 + s * 0.1;
+            const hoursRotation = (h % 12) * 30 + m * 0.5;
+
+            // Apply smooth transitions except at second reset
+            if (s === 0) {
+                clockFace.style.transition = 'none';
+            } else {
+                clockFace.style.transition = 'transform 0.3s cubic-bezier(0.4, 1.8, 0.5, 1)';
+            }
+
+            clockFace.style.transform = `rotate(${faceRotation}deg)`;
+            hourHand.style.transform = `translateX(-50%) rotate(${hoursRotation}deg)`;
+            minuteHand.style.transform = `translateX(-50%) rotate(${minutesRotation}deg)`;
+            timeDisplay.textContent = `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+        }
+
+        // Binary Clock Update
+        function updateBinaryClock(h, m, s) {
+            const digits = [Math.floor(h / 10), h % 10, Math.floor(m / 10), m % 10, Math.floor(s / 10), s % 10];
+            const columns = document.querySelectorAll('.binary-column');
+            const timeDisplay = document.getElementById('binaryTime');
+
+            if (!columns.length || !timeDisplay) return;
+
+            digits.forEach((digit, colIndex) => {
+                if (columns[colIndex]) {
+                    const dots = columns[colIndex].querySelectorAll('.binary-dot');
+                    for (let bit = 0; bit < 6; bit++) {
+                        if (dots[5 - bit]) {
+                            dots[5 - bit].classList.toggle('active', (digit & (1 << bit)) !== 0);
+                        }
+                    }
+                }
+            });
+
+            timeDisplay.textContent = `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+        }
+
+        // Word Clock Update
+        function updateWordClock(h, m) {
+            const words = document.querySelectorAll('.word');
+            const timeDisplay = document.getElementById('wordTime');
+
+            if (!words.length || !timeDisplay) return;
+
+            // Clear all active words
+            words.forEach(word => word.classList.remove('active'));
+
+            // Activate basic words
+            const itWord = document.querySelector('[data-word="IT"]');
+            const isWord = document.querySelector('[data-word="IS"]');
+            if (itWord) itWord.classList.add('active');
+            if (isWord) isWord.classList.add('active');
+
+            // Time approximation logic
+            let displayHour = h % 12;
+            if (displayHour === 0) displayHour = 12;
+
+            // Activate hour
+            const hourWords = ['', 'ONE', 'TWO', 'THREE', 'FOUR', 'FIVE_HOUR', 'SIX', 'SEVEN', 'EIGHT', 'NINE', 'TEN_HOUR', 'ELEVEN', 'TWELVE'];
+            const hourWord = document.querySelector(`[data-word="${hourWords[displayHour]}"]`);
+            if (hourWord) hourWord.classList.add('active');
+
+            // Activate minute approximations
+            if (m === 0) {
+                const oclockWord = document.querySelector('[data-word="OCLOCK"]');
+                if (oclockWord) oclockWord.classList.add('active');
+            } else if (m === 15) {
+                const quarterWord = document.querySelector('[data-word="QUARTER"]');
+                const pastWord = document.querySelector('[data-word="PAST"]');
+                if (quarterWord) quarterWord.classList.add('active');
+                if (pastWord) pastWord.classList.add('active');
+            } else if (m === 30) {
+                const halfWord = document.querySelector('[data-word="HALF"]');
+                const pastWord = document.querySelector('[data-word="PAST"]');
+                if (halfWord) halfWord.classList.add('active');
+                if (pastWord) pastWord.classList.add('active');
+            } else if (m === 45) {
+                const quarterWord = document.querySelector('[data-word="QUARTER"]');
+                const toWord = document.querySelector('[data-word="TO"]');
+                if (quarterWord) quarterWord.classList.add('active');
+                if (toWord) toWord.classList.add('active');
+            }
+
+            // AM/PM
+            const ampmWord = document.querySelector(`[data-word="${h < 12 ? 'AM' : 'PM'}"]`);
+            if (ampmWord) ampmWord.classList.add('active');
+
+            timeDisplay.textContent = `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`;
+        }
+
+        // Pie Chart Clock Update
+        function updatePieClock(h, m, s) {
+            const hoursSlice = document.getElementById('hoursSlice');
+            const minutesSlice = document.getElementById('minutesSlice');
+            const secondsSlice = document.getElementById('secondsSlice');
+            const pieTime = document.getElementById('pieTime');
+            const pieTimeDisplay = document.getElementById('pieTimeDisplay');
+
+            if (!hoursSlice || !minutesSlice || !secondsSlice || !pieTime || !pieTimeDisplay) return;
+
+            // Calculate progress for each time unit
+            const hourProgress = (h % 12) / 12 * 534.1;
+            const minuteProgress = m / 60 * 408.4;
+            const secondProgress = s / 60 * 282.7;
+
+            hoursSlice.style.strokeDasharray = `${hourProgress} 534.1`;
+            minutesSlice.style.strokeDasharray = `${minuteProgress} 408.4`;
+            secondsSlice.style.strokeDasharray = `${secondProgress} 282.7`;
+
+            const timeStr = `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+            pieTime.textContent = timeStr;
+            pieTimeDisplay.textContent = timeStr;
+        }
+
+        // Flip Clock Update
+        function updateFlipClock(h, m, s) {
+            const timeStr = `${h.toString().padStart(2, '0')}${m.toString().padStart(2, '0')}${s.toString().padStart(2, '0')}`;
+            const elements = ['hour1', 'hour2', 'min1', 'min2', 'sec1', 'sec2'];
+            const flipTime = document.getElementById('flipTime');
+
+            elements.forEach((id, index) => {
+                const element = document.getElementById(id);
+                if (element && timeStr[index]) {
+                    element.textContent = timeStr[index];
+                }
+            });
+
+            if (flipTime) {
+                flipTime.textContent = `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+            }
+        }
+
+        // Dot Matrix Clock Update
+        function updateDotMatrix(h, m, s) {
+            const timeStr = `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`;
+            const dots = document.querySelectorAll('.matrix-dot');
+            const matrixTime = document.getElementById('matrixTime');
+
+            if (!dots.length || !matrixTime) return;
+
+            // Clear all dots
+            dots.forEach(dot => dot.classList.remove('active'));
+
+            let x = 0;
+            for (let char of timeStr) {
+                const pattern = digitPatterns[char];
+                if (pattern) {
+                    for (let row = 0; row < 7; row++) {
+                        for (let col = 0; col < 5; col++) {
+                            if (pattern[row] && pattern[row][col]) {
+                                const index = row * 25 + x + col;
+                                if (dots[index]) {
+                                    dots[index].classList.add('active');
+                                }
+                            }
+                        }
+                    }
+                }
+                x += 6; // Space between characters
+            }
+
+            matrixTime.textContent = `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+        }
+
+        // Color Clock Update
+        function updateColorClock(h, m, s) {
+            const colorSwatch = document.getElementById('colorSwatch');
+            const colorTime = document.getElementById('colorTime');
+            const colorCode = document.getElementById('colorCode');
+            const colorTimeDisplay = document.getElementById('colorTimeDisplay');
+            const redValue = document.getElementById('redValue');
+            const greenValue = document.getElementById('greenValue');
+            const blueValue = document.getElementById('blueValue');
+
+            if (!colorSwatch || !colorTime || !colorCode) return;
+
+            // Convert time to RGB values
+            const red = Math.floor(h * 255 / 23);
+            const green = Math.floor(m * 255 / 59);
+            const blue = Math.floor(s * 255 / 59);
+
+            const redHex = red.toString(16).padStart(2, '0');
+            const greenHex = green.toString(16).padStart(2, '0');
+            const blueHex = blue.toString(16).padStart(2, '0');
+
+            const hexColor = `${redHex}${greenHex}${blueHex}`;
+
+            colorSwatch.style.background = `linear-gradient(135deg, #${hexColor}, #${hexColor}88)`;
+
+            const timeStr = `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+            colorTime.textContent = timeStr;
+            colorCode.textContent = hexColor.toUpperCase();
+
+            if (colorTimeDisplay) colorTimeDisplay.textContent = timeStr;
+            if (redValue) redValue.textContent = redHex.toUpperCase();
+            if (greenValue) greenValue.textContent = greenHex.toUpperCase();
+            if (blueValue) blueValue.textContent = blueHex.toUpperCase();
+        }
+
+        // Neon Analog Clock Update
+        function updateNeonClock(h, m, s) {
+            const hourHand = document.getElementById('neonHourHand');
+            const minuteHand = document.getElementById('neonMinuteHand');
+            const secondHand = document.getElementById('neonSecondHand');
+            const neonTime = document.getElementById('neonTime');
+
+            if (!hourHand || !minuteHand || !secondHand || !neonTime) return;
+
+            // Calculate angles
+            const secondAngle = s * 6; // 360/60 = 6 degrees per second
+            const minuteAngle = m * 6 + s * 0.1; // 6 degrees per minute + smooth seconds
+            const hourAngle = (h % 12) * 30 + m * 0.5; // 30 degrees per hour + smooth minutes
+
+            hourHand.style.transform = `translateX(-50%) rotate(${hourAngle}deg)`;
+            minuteHand.style.transform = `translateX(-50%) rotate(${minuteAngle}deg)`;
+            secondHand.style.transform = `translateX(-50%) rotate(${secondAngle}deg)`;
+
+            neonTime.textContent = `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+        }
+
+        // Wave Clock Update
+        function updateWaveClock(h, m, s) {
+            const waveHours = document.getElementById('waveHours');
+            const waveMinutes = document.getElementById('waveMinutes');
+            const waveSeconds = document.getElementById('waveSeconds');
+            const waveTime = document.getElementById('waveTime');
+
+            if (!waveHours || !waveMinutes || !waveSeconds || !waveTime) return;
+
+            // Calculate percentages
+            const hourPercent = (h / 24) * 100;
+            const minutePercent = (m / 60) * 100;
+            const secondPercent = (s / 60) * 100;
+
+            waveHours.style.width = `${hourPercent}%`;
+            waveMinutes.style.width = `${minutePercent}%`;
+            waveSeconds.style.width = `${secondPercent}%`;
+
+            waveTime.textContent = `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+        }
+
+        // Spiral Clock Update
+        function updateSpiralClock(h, m, s) {
+            const spiralHours = document.getElementById('spiralHours');
+            const spiralMinutes = document.getElementById('spiralMinutes');
+            const spiralSeconds = document.getElementById('spiralSeconds');
+            const spiralTimeDisplay = document.getElementById('spiralTimeDisplay');
+            const spiralTime = document.getElementById('spiralTime');
+
+            if (!spiralHours || !spiralMinutes || !spiralSeconds) return;
+
+            // Calculate spiral progress
+            const hourProgress = (h % 12) / 12;
+            const minuteProgress = m / 60;
+            const secondProgress = s / 60;
+
+            spiralHours.style.strokeDashoffset = 800 - (800 * hourProgress);
+            spiralMinutes.style.strokeDashoffset = 600 - (600 * minuteProgress);
+            spiralSeconds.style.strokeDashoffset = 400 - (400 * secondProgress);
+
+            const timeStr = `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+            if (spiralTimeDisplay) spiralTimeDisplay.textContent = timeStr;
+            if (spiralTime) spiralTime.textContent = timeStr;
+        }
+
+        // Liquid Clock Update
+        function updateLiquidClock(h, m, s) {
+            const liquidHours = document.getElementById('liquidHours');
+            const liquidMinutes = document.getElementById('liquidMinutes');
+            const liquidSeconds = document.getElementById('liquidSeconds');
+            const liquidTime = document.getElementById('liquidTime');
+
+            if (!liquidHours || !liquidMinutes || !liquidSeconds || !liquidTime) return;
+
+            // Calculate liquid heights (as percentages)
+            const hourHeight = (h / 24) * 100;
+            const minuteHeight = (m / 60) * 100;
+            const secondHeight = (s / 60) * 100;
+
+            liquidHours.style.height = `${hourHeight}%`;
+            liquidMinutes.style.height = `${minuteHeight}%`;
+            liquidSeconds.style.height = `${secondHeight}%`;
+
+            liquidTime.textContent = `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+        }
+
+        // Matrix Rain Clock Update
+        function updateMatrixRainClock(h, m, s) {
+            const matrixRainTime = document.getElementById('matrixRainTime');
+            const rainTime = document.getElementById('rainTime');
+
+            if (!matrixRainTime || !rainTime) return;
+
+            const timeStr = `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+            matrixRainTime.textContent = timeStr;
+            rainTime.textContent = timeStr;
+        }
+
+        // Steampunk Clock Update
+        function updateSteampunkClock(h, m, s) {
+            const hourHand = document.getElementById('steampunkHour');
+            const minuteHand = document.getElementById('steampunkMinute');
+            const secondHand = document.getElementById('steampunkSecond');
+            const steampunkTime = document.getElementById('steampunkTime');
+
+            if (!hourHand || !minuteHand || !secondHand || !steampunkTime) return;
+
+            // Calculate angles
+            const secondAngle = s * 6;
+            const minuteAngle = m * 6 + s * 0.1;
+            const hourAngle = (h % 12) * 30 + m * 0.5;
+
+            hourHand.style.transform = `translateX(-50%) rotate(${hourAngle}deg)`;
+            minuteHand.style.transform = `translateX(-50%) rotate(${minuteAngle}deg)`;
+            secondHand.style.transform = `translateX(-50%) rotate(${secondAngle}deg)`;
+
+            steampunkTime.textContent = `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+        }
+
+        // Canvas initialization and animation functions
+
+        // Initialize Wave Canvas
+        function initWaveCanvas() {
+            const canvas = document.getElementById('waveCanvas');
+            if (!canvas) return;
+
+            const ctx = canvas.getContext('2d');
+            canvas.waveOffset = 0;
+
+            function drawWave() {
+                const now = new Date();
+                const hours = now.getHours();
+                const minutes = now.getMinutes();
+                const seconds = now.getSeconds();
+
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                // Draw three waveforms representing hours, minutes, seconds
+                drawWaveform(ctx, canvas.width, canvas.height, hours / 24, '#ff6b6b', canvas.waveOffset);
+                drawWaveform(ctx, canvas.width, canvas.height, minutes / 60, '#4ecdc4', canvas.waveOffset + Math.PI / 3);
+                drawWaveform(ctx, canvas.width, canvas.height, seconds / 60, '#45b7d1', canvas.waveOffset + Math.PI * 2 / 3);
+
+                canvas.waveOffset += 0.05;
+            }
+
+            canvas.drawWave = drawWave;
+        }
+
+        function drawWaveform(ctx, width, height, amplitude, color, offset) {
+            ctx.beginPath();
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 2;
+            ctx.shadowBlur = 10;
+            ctx.shadowColor = color;
+
+            for (let x = 0; x < width; x++) {
+                const y = height / 2 + Math.sin((x * 0.02) + offset) * amplitude * (height / 3);
+                if (x === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+
+            ctx.stroke();
+            ctx.shadowBlur = 0;
+        }
+
+        // Initialize Particle Canvas
+        function initParticleCanvas() {
+            const canvas = document.getElementById('particleCanvas');
+            if (!canvas) return;
+
+            const ctx = canvas.getContext('2d');
+            canvas.particles = [];
+
+            // Create initial particles
+            for (let i = 0; i < 100; i++) {
+                canvas.particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    vx: (Math.random() - 0.5) * 2,
+                    vy: (Math.random() - 0.5) * 2,
+                    size: Math.random() * 3 + 1,
+                    color: ['#ff6b6b', '#4ecdc4', '#45b7d1'][Math.floor(Math.random() * 3)],
+                    life: Math.random()
+                });
+            }
+
+            function drawParticles() {
+                const now = new Date();
+                const timeStr = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                // Update and draw particles
+                canvas.particles.forEach((particle, index) => {
+                    particle.x += particle.vx;
+                    particle.y += particle.vy;
+                    particle.life -= 0.01;
+
+                    // Bounce off edges
+                    if (particle.x <= 0 || particle.x >= canvas.width) particle.vx *= -1;
+                    if (particle.y <= 0 || particle.y >= canvas.height) particle.vy *= -1;
+
+                    // Reset dead particles
+                    if (particle.life <= 0) {
+                        particle.x = Math.random() * canvas.width;
+                        particle.y = Math.random() * canvas.height;
+                        particle.life = 1;
+                    }
+
+                    // Draw particle
+                    ctx.beginPath();
+                    ctx.fillStyle = particle.color;
+                    ctx.shadowBlur = 8;
+                    ctx.shadowColor = particle.color;
+                    ctx.globalAlpha = particle.life;
+                    ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+                    ctx.fill();
+                });
+
+                ctx.globalAlpha = 1;
+                ctx.shadowBlur = 0;
+
+                // Draw time using particles
+                drawTimeWithParticles(ctx, canvas, timeStr);
+            }
+
+            canvas.drawParticles = drawParticles;
+        }
+
+        function drawTimeWithParticles(ctx, canvas, timeStr) {
+            ctx.font = 'bold 40px JetBrains Mono';
+            ctx.textAlign = 'center';
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+            ctx.strokeStyle = 'rgba(0, 0, 0, 0.5)';
+            ctx.lineWidth = 2;
+
+            const x = canvas.width / 2;
+            const y = canvas.height / 2;
+
+            ctx.strokeText(timeStr, x, y);
+            ctx.fillText(timeStr, x, y);
+        }
+
+        // Initialize Matrix Rain Canvas
+        function initRainCanvas() {
+            const canvas = document.getElementById('rainCanvas');
+            if (!canvas) return;
+
+            const ctx = canvas.getContext('2d');
+            const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZアカサタナハマヤラワガザダバパイキシチニヒミリヰギジヂビピウクスツヌフムユルグズヅブプエケセテネヘメレヱゲゼデベペオコソトノホモヨロヲゴゾドボポ';
+            const fontSize = 14;
+            const columns = Math.floor(canvas.width / fontSize);
+
+            canvas.drops = [];
+            for (let i = 0; i < columns; i++) {
+                canvas.drops[i] = Math.random() * canvas.height;
+            }
+
+            function drawRain() {
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                ctx.fillStyle = '#00ff00';
+                ctx.font = `${fontSize}px monospace`;
+
+                for (let i = 0; i < canvas.drops.length; i++) {
+                    const char = chars[Math.floor(Math.random() * chars.length)];
+                    const x = i * fontSize;
+                    const y = canvas.drops[i];
+
+                    ctx.fillText(char, x, y);
+
+                    if (y > canvas.height && Math.random() > 0.975) {
+                        canvas.drops[i] = 0;
+                    }
+                    canvas.drops[i] += fontSize;
+                }
+            }
+
+            canvas.drawRain = drawRain;
+        }
+
+        // Main canvas animation loop
+        function animateCanvases() {
+            // Update wave canvas
+            const waveCanvas = document.getElementById('waveCanvas');
+            if (waveCanvas && waveCanvas.drawWave) {
+                waveCanvas.drawWave();
+            }
+
+            // Update particle canvas
+            const particleCanvas = document.getElementById('particleCanvas');
+            if (particleCanvas && particleCanvas.drawParticles) {
+                particleCanvas.drawParticles();
+            }
+
+            // Update rain canvas
+            const rainCanvas = document.getElementById('rainCanvas');
+            if (rainCanvas && rainCanvas.drawRain) {
+                rainCanvas.drawRain();
+            }
+
+            // Schedule next frame
+            animationFrameId = requestAnimationFrame(animateCanvases);
+        }
+
+        // Utility function to convert time to words (for word clock)
+        function timeToWords(hours, minutes) {
+            const hourWords = [
+                'twelve', 'one', 'two', 'three', 'four', 'five',
+                'six', 'seven', 'eight', 'nine', 'ten', 'eleven'
+            ];
+
+            let words = ['IT', 'IS'];
+            let displayHour = hours % 12;
+
+            if (minutes === 0) {
+                words.push(hourWords[displayHour].toUpperCase());
+                words.push("O'CLOCK");
+            } else if (minutes === 15) {
+                words.push('QUARTER');
+                words.push('PAST');
+                words.push(hourWords[displayHour].toUpperCase());
+            } else if (minutes === 30) {
+                words.push('HALF');
+                words.push('PAST');
+                words.push(hourWords[displayHour].toUpperCase());
+            } else if (minutes === 45) {
+                words.push('QUARTER');
+                words.push('TO');
+                words.push(hourWords[(displayHour + 1) % 12].toUpperCase());
+            } else {
+                // For other minutes, just show the hour
+                words.push(hourWords[displayHour].toUpperCase());
+            }
+
+            // Add AM/PM
+            words.push(hours < 12 ? 'AM' : 'PM');
+
+            return words;
+        }
+
+        // Add SVG gradients for spiral clock
+        function addSVGGradients() {
+            const spiralSvg = document.querySelector('.spiral-svg');
+            if (!spiralSvg) return;
+
+            const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+
+            // Hours gradient
+            const hoursGradient = document.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
+            hoursGradient.id = 'spiralHoursGradient';
+            hoursGradient.innerHTML = `
+                <stop offset="0%" stop-color="#ff6b6b"/>
+                <stop offset="100%" stop-color="#ff8e8e"/>
+            `;
+
+            // Minutes gradient
+            const minutesGradient = document.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
+            minutesGradient.id = 'spiralMinutesGradient';
+            minutesGradient.innerHTML = `
+                <stop offset="0%" stop-color="#4ecdc4"/>
+                <stop offset="100%" stop-color="#7ed7d1"/>
+            `;
+
+            // Seconds gradient
+            const secondsGradient = document.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
+            secondsGradient.id = 'spiralSecondsGradient';
+            secondsGradient.innerHTML = `
+                <stop offset="0%" stop-color="#45b7d1"/>
+                <stop offset="100%" stop-color="#74c7e3"/>
+            `;
+
+            defs.appendChild(hoursGradient);
+            defs.appendChild(minutesGradient);
+            defs.appendChild(secondsGradient);
+            spiralSvg.appendChild(defs);
+        }
+
+        // Error handling and cleanup
+        function cleanup() {
+            if (animationFrameId) {
+                cancelAnimationFrame(animationFrameId);
+            }
+        }
+
+        // Handle page visibility changes to optimize performance
+        document.addEventListener('visibilitychange', function () {
+            if (document.hidden) {
+                cleanup();
+            } else {
+                animateCanvases();
+            }
+        });
+
+        // Initialize everything when page loads
+        document.addEventListener('DOMContentLoaded', function () {
+            addSVGGradients();
+            initializeClocks();
+        });
+
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', cleanup);
+    </script>
+</body>
+
+</html>
